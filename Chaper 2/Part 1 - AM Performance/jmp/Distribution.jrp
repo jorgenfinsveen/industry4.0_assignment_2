@@ -1,0 +1,52 @@
+﻿New Table( "roughness.jmp",
+	Add Rows( 5 ),
+	New Column( "Roughness",
+		Numeric,
+		"Nominal",
+		Format( "Best", 12 ),
+		Set Values( [30, 40, 50, 100, 150] ),
+		Set Display Width( 103 )
+	),
+	New Column( "Sensor 1",
+		Numeric,
+		"Nominal",
+		Format( "Best", 12 ),
+		Set Values( [547.25, 541.99, 537.09, 518.23, 505.76] ),
+		Set Display Width( 93 )
+	),
+	New Column( "Sensor 2",
+		Numeric,
+		"Nominal",
+		Format( "Best", 12 ),
+		Set Values( [573.1, 567.26, 561.9, 541.82, 528.9] ),
+		Set Display Width( 99 )
+	),
+	New Column( "Sensor 3",
+		Numeric,
+		"Nominal",
+		Format( "Best", 12 ),
+		Set Values( [588.91, 582.56, 576.85, 556.08, 543.14] ),
+		Set Display Width( 87 )
+	),
+	New Column( "Sensor 4",
+		Numeric,
+		"Nominal",
+		Format( "Best", 12 ),
+		Set Values( [583.32, 576.74, 570.91, 550.32, 537.93] ),
+		Set Display Width( 89 )
+	),
+	New Column( "Sensor 5",
+		Numeric,
+		"Nominal",
+		Format( "Best", 12 ),
+		Set Values( [558.1, 551.86, 546.34, 527.06, 515.56] ),
+		Set Display Width( 115 )
+	)
+) << Run Formulas;
+Distribution(
+	Nominal Distribution( Column( :Sensor 1 ) ),
+	Nominal Distribution( Column( :Sensor 2 ) ),
+	Nominal Distribution( Column( :Sensor 3 ) ),
+	Nominal Distribution( Column( :Sensor 4 ) ),
+	Nominal Distribution( Column( :Sensor 5 ) )
+);

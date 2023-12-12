@@ -1,0 +1,113 @@
+﻿New Table( "5 Factorial",
+	Add Rows( 5 ),
+	New Table Variable( "Design", "5 Factorial" ),
+	New Script(
+		"Model",
+		Fit Model(
+			Effects( :Roughness ),
+			Y( :Sensor 1, :Sensor 2, :Sensor 3, :Sensor 4, :Sensor 5 ),
+			PERSONALITY( Standard Least Squares )
+		)
+	),
+	New Script( "Evaluate Design", DOE( Evaluate Design, X( :Roughness ) ) ),
+	New Script(
+		"DOE Dialog",
+		DOE(
+			Full Factorial Design,
+			{Add Response( Maximize, "Sensor 1", 500, 600, . ),
+			Add Response( Maximize, "Sensor 2", 500, 600, . ),
+			Add Response( Maximize, "Sensor 3", 500, 600, . ),
+			Add Response( Maximize, "Sensor 4", 500, 600, . ),
+			Add Response( Maximize, "Sensor 5", 500, 600, . ),
+			Add Factor( Continuous, {30, 40, 50, 100, 150}, "Roughness", 0 ),
+			Set Random Seed( 47901 ), Make Design, Simulate Responses( 0 ),
+			Set Run Order( Keep the Same ), Make Table}
+		)
+	),
+	New Column( "Pattern",
+		Character,
+		"Nominal",
+		Set Values( {"1", "2", "3", "4", "5"} )
+	),
+	New Column( "Roughness",
+		Numeric,
+		"Continuous",
+		Format( "Best", 12 ),
+		Set Property( "Coding", {30, 150} ),
+		Set Property( "Design Role", DesignRole( Continuous ) ),
+		Set Property( "Factor Changes", Easy ),
+		Set Values( [30, 40, 50, 100, 150] )
+	),
+	New Column( "Sensor 1",
+		Numeric,
+		"Continuous",
+		Format( "Best", 12 ),
+		Set Property(
+			"Response Limits",
+			{Goal( Maximize ), Lower( 500 ), Upper( 600 ), Importance( . )}
+		),
+		Set Selected,
+		Set Values( [547.25, 541.99, 537.09, 518.23, 505.76] )
+	),
+	New Column( "Sensor 2",
+		Numeric,
+		"Continuous",
+		Format( "Best", 12 ),
+		Set Property(
+			"Response Limits",
+			{Goal( Maximize ), Lower( 500 ), Upper( 600 ), Importance( . )}
+		),
+		Set Selected,
+		Set Values( [573.1, 567.26, 561.9, 541.82, 528.9] )
+	),
+	New Column( "Sensor 3",
+		Numeric,
+		"Continuous",
+		Format( "Best", 12 ),
+		Set Property(
+			"Response Limits",
+			{Goal( Maximize ), Lower( 500 ), Upper( 600 ), Importance( . )}
+		),
+		Set Selected,
+		Set Values( [588.91, 582.56, 576.85, 556.08, 543.14] ),
+		Set Display Width( 63 )
+	),
+	New Column( "Sensor 4",
+		Numeric,
+		"Continuous",
+		Format( "Best", 12 ),
+		Set Property(
+			"Response Limits",
+			{Goal( Maximize ), Lower( 500 ), Upper( 600 ), Importance( . )}
+		),
+		Set Selected,
+		Set Values( [583.32, 576.74, 570.91, 550.32, 537.93] )
+	),
+	New Column( "Sensor 5",
+		Numeric,
+		"Continuous",
+		Format( "Best", 12 ),
+		Set Property(
+			"Response Limits",
+			{Goal( Maximize ), Lower( 500 ), Upper( 600 ), Importance( . )}
+		),
+		Set Selected,
+		Set Values( [558.1, 551.86, 546.34, 527.06, 515.56] )
+	),
+	Set Row States( [1, 1, 1, 1, 1] ),
+	Set Label Columns( :Pattern )
+) << Run Formulas;
+Graph Builder(
+	Variables(
+		X( :Roughness ),
+		Y( :Sensor 1 ),
+		Y( :Sensor 2, Position( 1 ) ),
+		Y( :Sensor 3, Position( 1 ) ),
+		Y( :Sensor 4, Position( 1 ) ),
+		Y( :Sensor 5, Position( 1 ) )
+	),
+	Elements(
+		Smoother( X, Y( 1 ), Y( 2 ), Y( 3 ), Y( 4 ), Y( 5 ), Legend( 17 ) ),
+		Points( X, Y( 1 ), Y( 2 ), Y( 3 ), Y( 4 ), Y( 5 ), Legend( 18 ) )
+	)
+);
